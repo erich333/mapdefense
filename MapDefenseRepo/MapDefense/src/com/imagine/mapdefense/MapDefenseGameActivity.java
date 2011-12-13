@@ -12,7 +12,7 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 
-public class MapDefenseGameActivity extends BaseGameActivity {
+public abstract class MapDefenseGameActivity extends BaseGameActivity {
 
 	//540x960=Photon resolution.
     protected int CAMERA_WIDTH = 540;
@@ -51,21 +51,11 @@ public class MapDefenseGameActivity extends BaseGameActivity {
 	}
 
 	@Override
-	public void onLoadResources() {
-		// TODO Auto-generated method stub
-
-	}
+	public abstract void onLoadResources();
 
 	@Override
-	public Scene onLoadScene() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract Scene onLoadScene();
 
 	@Override
-	public void onLoadComplete() {
-		// TODO Auto-generated method stub
-
-	}
-
+	public abstract void onLoadComplete();
 }
