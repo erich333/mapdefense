@@ -32,8 +32,6 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.view.Gravity;
-import android.widget.FrameLayout.LayoutParams;
 
 import com.google.android.maps.MapActivity;
 
@@ -316,7 +314,7 @@ public abstract class MapGameActivity extends MapActivity implements IGameInterf
 		}
 
 		protected void onSetContentView() {
-			setContentView(R.layout.main);
+			setContentView(R.layout.maplevel);
 			this.mRenderSurfaceView = (RenderSurfaceView) findViewById(R.id.render);
 //			mRenderSurfaceView.setContext(this);
 			// We want an 8888 pixel format because that's required for

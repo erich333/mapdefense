@@ -1,10 +1,6 @@
 package com.imagine.mapdefense;
 
 import org.anddev.andengine.engine.Engine;
-import org.anddev.andengine.engine.camera.Camera;
-import org.anddev.andengine.engine.options.EngineOptions;
-import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
-import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
@@ -13,48 +9,14 @@ import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 
-import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Display;
-import android.view.WindowManager;
-
-public class StartActivity extends MapGameActivity {
-    private int CAMERA_WIDTH;
-	private int CAMERA_HEIGHT;
-	private static final float SPRITE_WIDTH_DP = 160;
-	private static final float SPRITE_HEIGHT_DP = 160;
-	private float densityScaling;
-	private int spriteWidth;
-	private int spriteHeight;
-	private Camera camera;
+public class StartActivity extends MapDefenseGameActivity {
+	
 	private BitmapTextureAtlas texture;
 	private TextureRegion splashTextureRegion;
 
     @Override
 	public Engine onLoadEngine() {
-
-		WindowManager w = getWindowManager(); 
-		Display d = w.getDefaultDisplay(); 
-		//d.setSystemUiVisibility(View.STATUS_BAR_HIDDEN);
-
-		DisplayMetrics metrics = new DisplayMetrics();
-		d.getMetrics(metrics);
-		this.CAMERA_WIDTH = d.getWidth();
-		this.CAMERA_HEIGHT = d.getHeight();
-
-		// Factor to scale DIP with to get screen pixel (factor 1.0 equals 160dpi)
-		this.densityScaling = metrics.density;
-
-		// multiply 160dpi-Sprite dimensions with density factor
-		this.spriteWidth = Math.round(SPRITE_WIDTH_DP * densityScaling);
-		this.spriteHeight = Math.round(SPRITE_HEIGHT_DP * densityScaling);
-
-		this.camera = new Camera(0, 0, this.CAMERA_WIDTH, this.CAMERA_HEIGHT);
-		
-		RatioResolutionPolicy ratio = new RatioResolutionPolicy(this.CAMERA_WIDTH, this.CAMERA_HEIGHT);
-
-		return new Engine(new EngineOptions(true, ScreenOrientation.LANDSCAPE,
-				ratio, this.camera).setNeedsSound(true));
+    	return super.onLoadEngine();		
 	}
 
     @Override
