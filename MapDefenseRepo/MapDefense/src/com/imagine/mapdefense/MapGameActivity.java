@@ -1,7 +1,5 @@
 package com.imagine.mapdefense;
 
-import java.util.concurrent.Callable;
-
 import org.anddev.andengine.audio.music.MusicManager;
 import org.anddev.andengine.audio.sound.SoundManager;
 import org.anddev.andengine.engine.Engine;
@@ -19,12 +17,8 @@ import org.anddev.andengine.sensor.orientation.IOrientationListener;
 import org.anddev.andengine.sensor.orientation.OrientationSensorOptions;
 import org.anddev.andengine.ui.IGameInterface;
 import org.anddev.andengine.util.ActivityUtils;
-import org.anddev.andengine.util.AsyncCallable;
-import org.anddev.andengine.util.Callback;
 import org.anddev.andengine.util.Debug;
-import org.anddev.andengine.util.progress.ProgressCallable;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;
@@ -32,6 +26,8 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.view.Gravity;
+import android.widget.FrameLayout.LayoutParams;
 
 import com.google.android.maps.MapActivity;
 
@@ -42,119 +38,7 @@ public abstract class MapGameActivity extends MapActivity implements IGameInterf
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-	
 	// ===========================================================
-		// Constants
-		// ===========================================================
-
-		// ===========================================================
-		// Fields
-		// ===========================================================
-
-		// ===========================================================
-		// Constructors
-		// ===========================================================
-
-		// ===========================================================
-		// Getter & Setter
-		// ===========================================================
-
-		// ===========================================================
-		// Methods for/from SuperClass/Interfaces
-		// ===========================================================
-
-		// ===========================================================
-		// Methods
-		// ===========================================================
-
-		/**
-		 * Performs a task in the background, showing a {@link ProgressDialog},
-		 * while the {@link Callable} is being processed.
-		 * 
-		 * @param <T>
-		 * @param pTitleResID
-		 * @param pMessageResID
-		 * @param pErrorMessageResID
-		 * @param pCallable
-		 * @param pCallback
-		 */
-		protected <T> void doAsync(final int pTitleResID, final int pMessageResID, final Callable<T> pCallable, final Callback<T> pCallback) {
-			this.doAsync(pTitleResID, pMessageResID, pCallable, pCallback, null);
-		}
-
-		/**
-		 * Performs a task in the background, showing a indeterminate {@link ProgressDialog},
-		 * while the {@link Callable} is being processed.
-		 * 
-		 * @param <T>
-		 * @param pTitleResID
-		 * @param pMessageResID
-		 * @param pErrorMessageResID
-		 * @param pCallable
-		 * @param pCallback
-		 * @param pExceptionCallback
-		 */
-		protected <T> void doAsync(final int pTitleResID, final int pMessageResID, final Callable<T> pCallable, final Callback<T> pCallback, final Callback<Exception> pExceptionCallback) {
-			ActivityUtils.doAsync(this, pTitleResID, pMessageResID, pCallable, pCallback, pExceptionCallback);
-		}
-
-		/**
-		 * Performs a task in the background, showing a {@link ProgressDialog} with an ProgressBar,
-		 * while the {@link AsyncCallable} is being processed.
-		 * 
-		 * @param <T>
-		 * @param pTitleResID
-		 * @param pMessageResID
-		 * @param pErrorMessageResID
-		 * @param pAsyncCallable
-		 * @param pCallback
-		 */
-		protected <T> void doProgressAsync(final int pTitleResID, final ProgressCallable<T> pCallable, final Callback<T> pCallback) {
-			this.doProgressAsync(pTitleResID, pCallable, pCallback, null);
-		}
-
-		/**
-		 * Performs a task in the background, showing a {@link ProgressDialog} with a ProgressBar,
-		 * while the {@link AsyncCallable} is being processed.
-		 * 
-		 * @param <T>
-		 * @param pTitleResID
-		 * @param pMessageResID
-		 * @param pErrorMessageResID
-		 * @param pAsyncCallable
-		 * @param pCallback
-		 * @param pExceptionCallback
-		 */
-		protected <T> void doProgressAsync(final int pTitleResID, final ProgressCallable<T> pCallable, final Callback<T> pCallback, final Callback<Exception> pExceptionCallback) {
-			ActivityUtils.doProgressAsync(this, pTitleResID, pCallable, pCallback, pExceptionCallback);
-		}
-
-		/**
-		 * Performs a task in the background, showing an indeterminate {@link ProgressDialog},
-		 * while the {@link AsyncCallable} is being processed.
-		 * 
-		 * @param <T>
-		 * @param pTitleResID
-		 * @param pMessageResID
-		 * @param pErrorMessageResID
-		 * @param pAsyncCallable
-		 * @param pCallback
-		 * @param pExceptionCallback
-		 */
-		protected <T> void doAsync(final int pTitleResID, final int pMessageResID, final AsyncCallable<T> pAsyncCallable, final Callback<T> pCallback, final Callback<Exception> pExceptionCallback) {
-			ActivityUtils.doAsync(this, pTitleResID, pMessageResID, pAsyncCallable, pCallback, pExceptionCallback);
-		}
-
-		// ===========================================================
-		// Inner and Anonymous Classes
-		// ===========================================================
-
-		public static class CancelledException extends Exception {
-			private static final long serialVersionUID = -78123211381435596L;
-		}
-		
-		// ===========================================================
 		// Constants
 		// ===========================================================
 
@@ -252,7 +136,7 @@ public abstract class MapGameActivity extends MapActivity implements IGameInterf
 		}
 
 		public FontManager getFontManager() {
-			return this.mEngine.getFontManager();
+			return this.getFontManager();
 		}
 
 		public SoundManager getSoundManager() {
@@ -314,7 +198,7 @@ public abstract class MapGameActivity extends MapActivity implements IGameInterf
 		}
 
 		protected void onSetContentView() {
-			setContentView(R.layout.maplevel);
+			this.setContentView(R.layout.maplevel);
 			this.mRenderSurfaceView = (RenderSurfaceView) findViewById(R.id.render);
 //			mRenderSurfaceView.setContext(this);
 			// We want an 8888 pixel format because that's required for
@@ -324,13 +208,10 @@ public abstract class MapGameActivity extends MapActivity implements IGameInterf
 	               
 	        // Use a surface format with an Alpha channel
 	        this.mRenderSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-	        
-	        //TODO: Figure out what version, etc. we are working with.
-//	        // Make sure we are on top otherwise the surface view cuts a hole through
-//	        // anything above it in the zorder.
-//	        this.mRenderSurfaceView.setZOrderOnTop(true);    
-
-
+	 
+	        // Make sure we are on top otherwise the surface view cuts a hole through
+	        // anything above it in the zorder.
+	        this.mRenderSurfaceView.setZOrderOnTop(true);    
 		}
 
 		private void acquireWakeLock(final WakeLockOptions pWakeLockOptions) {
@@ -372,6 +253,11 @@ public abstract class MapGameActivity extends MapActivity implements IGameInterf
 			}
 		}
 
+		protected LayoutParams createSurfaceViewLayoutParams() {
+			final LayoutParams layoutParams = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
+			layoutParams.gravity = Gravity.CENTER;
+			return layoutParams;
+		}
 
 		protected void enableVibrator() {
 			this.mEngine.enableVibrator(this);

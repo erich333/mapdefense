@@ -8,6 +8,7 @@ import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolic
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
@@ -23,9 +24,12 @@ public abstract class MapDefenseGameActivity extends BaseGameActivity {
 	protected int spriteWidth;
 	protected int spriteHeight;
 	protected Camera camera;
+	
+	protected Handler handler;
 
 	@Override
 	public Engine onLoadEngine() {
+		handler = new Handler();
 		WindowManager w = getWindowManager(); 
 		Display d = w.getDefaultDisplay(); 
 		//d.setSystemUiVisibility(View.STATUS_BAR_HIDDEN);
