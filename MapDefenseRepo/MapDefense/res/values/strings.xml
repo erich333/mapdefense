@@ -3,5 +3,7 @@
 
     <string name="hello">Hello World, MapDefenseActivity!</string>
     <string name="app_name">MapDefense</string>
+    <string name="menu_name">Main Menu</string>
+    
 
 </resources>
